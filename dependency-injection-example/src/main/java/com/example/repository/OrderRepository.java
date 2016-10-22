@@ -12,6 +12,7 @@ public class OrderRepository {
 	}
 	
 	public void create(Order order) {
+		dataSourceManager.doConnect();
 		System.out.println("Order ID:" + order.getId() + " created.");
 	}
 }

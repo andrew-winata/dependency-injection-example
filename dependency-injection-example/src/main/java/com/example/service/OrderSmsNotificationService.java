@@ -10,6 +10,7 @@ public class OrderSmsNotificationService implements OrderNotificationService {
 	private SmsEngineApi smsEngineApi;
 	private CustomerRepository customerRepository;
 
+	// Dependency Injection by setter or property
 	public void setSmsEngineApi(SmsEngineApi smsEngineApi) {
 		this.smsEngineApi = smsEngineApi;
 	}

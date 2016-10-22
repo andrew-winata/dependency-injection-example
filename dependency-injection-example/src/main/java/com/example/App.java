@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.UUID;
 
 import com.example.datasource.DataSourceManager;
-import com.example.model.Customer;
 import com.example.model.Order;
 import com.example.model.OrderItem;
 import com.example.repository.CustomerRepository;

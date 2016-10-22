@@ -1,7 +1,5 @@
 package com.example.repository;
 
-import java.util.UUID;
-
 import com.example.datasource.DataSourceManager;
 import com.example.model.Customer;
 
