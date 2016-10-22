@@ -11,6 +11,7 @@ import com.example.repository.ProductRepository;
 public class OrderService {
 	private ProductRepository productRepository;
 	private OrderRepository orderRepository;
+	private OrderNotificationService orderNotificationService;
 	
 	// Dependency Injection by setter or property
 	public void setProductRepository(ProductRepository productRepository) {
@@ -20,6 +21,11 @@ public class OrderService {
 	// Dependency Injection by setter or property
 	public void setOrderRepository(OrderRepository orderRepository) {
 		this.orderRepository = orderRepository;
+	}
+	
+	// Dependency Injection by setter or property
+	public void setOrderNotificationService(OrderNotificationService orderNotificationService) {
+		this.orderNotificationService = orderNotificationService;
 	}
 
 	public void createOrder(Order order) throws Exception {
@@ -31,6 +37,6 @@ public class OrderService {
 			}
 		}
 		orderRepository.create(order);
+		orderNotificationService.sendNotificationToCustomer(order);
 	}
-	
 }

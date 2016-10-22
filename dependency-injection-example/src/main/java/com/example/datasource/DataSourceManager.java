@@ -32,6 +32,6 @@ public class DataSourceManager {
 	}
 
 	public void doConnect() {
-		System.out.println("Connect to database");
+		// Nothing to do here
 	}
 }

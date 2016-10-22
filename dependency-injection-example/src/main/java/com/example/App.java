@@ -8,9 +8,14 @@ import com.example.datasource.DataSourceManager;
 import com.example.model.Customer;
 import com.example.model.Order;
 import com.example.model.OrderItem;
+import com.example.repository.CustomerRepository;
 import com.example.repository.OrderRepository;
 import com.example.repository.ProductRepository;
+import com.example.service.OrderEmailNotificationService;
 import com.example.service.OrderService;
+import com.example.service.OrderSmsNotificationService;
+import com.example.webservice.EmailEngineApi;
+import com.example.webservice.SmsEngineApi;
 
 /**
  * Hello world!
@@ -30,13 +35,34 @@ public class App {
 		
 		ProductRepository productRepository = new ProductRepository(dataSourceManager);
 		OrderRepository orderRepository = new OrderRepository(dataSourceManager);
+		CustomerRepository customerRepository = new CustomerRepository(dataSourceManager);
+		
+		SmsEngineApi smsEngineApi = new SmsEngineApi();
+		EmailEngineApi emailEngineApi = new EmailEngineApi();
+		
+		OrderSmsNotificationService orderSmsNotificationService = new OrderSmsNotificationService();
+		orderSmsNotificationService.setCustomerRepository(customerRepository);
+		orderSmsNotificationService.setSmsEngineApi(smsEngineApi);
+		
+		OrderEmailNotificationService orderEmailNotificationService = new OrderEmailNotificationService();
+		orderEmailNotificationService.setCustomerRepository(customerRepository);
+		orderEmailNotificationService.setEmailEngineApi(emailEngineApi);
 		
 		OrderService orderService = new OrderService();
 		orderService.setProductRepository(productRepository);
 		orderService.setOrderRepository(orderRepository);
 		
+		
+		// Create order and send notification by email
+		orderService.setOrderNotificationService(orderEmailNotificationService);
 		Order order1 = createOrderData();
 		orderService.createOrder(order1);
+		
+		
+		// Create order and send notification by sms
+		orderService.setOrderNotificationService(orderSmsNotificationService);
+		Order order2 = createOrderData();
+		orderService.createOrder(order2);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -45,13 +71,7 @@ public class App {
 	public static Order createOrderData() {
 		Order order = new Order();
 		order.setId(UUID.randomUUID().toString());
-		
-		Customer customer = new Customer();
-		customer.setId(UUID.randomUUID().toString());
-		customer.setName("Budi");
-		customer.setAddress("Jl. KS Tubun 2C No.8");
-		
-		order.setCustomer(customer);
+		order.setCustomerId(UUID.randomUUID().toString());
 		List<OrderItem> orderItems = createOrderItemsData();
 		order.setItems(orderItems);
 		return order;

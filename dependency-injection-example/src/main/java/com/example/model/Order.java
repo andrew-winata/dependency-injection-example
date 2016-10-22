@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Order {
 	private String id;
-	private Customer customer;
+	private String customerId;
 	private List<OrderItem> items;
 
 	public String getId() {
@@ -14,13 +14,13 @@ public class Order {
 	public void setId(String id) {
 		this.id = id;
 	}
-
-	public Customer getCustomer() {
-		return customer;
+	
+	public String getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
 
 	public List<OrderItem> getItems() {
